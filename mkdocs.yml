@@ -1,0 +1,21 @@
+site_name: La Barca - Pipeline BI End-to-End
+site_description: Documentación del proyecto de Business Intelligence para La Barca
+site_author: Frank Ramos & Choquechambi Luque
+repo_url: https://github.com/faithbianposs/labarca-bi-pipeline
+
+theme:
+  name: material
+  language: es
+  palette:
+    primary: orange
+    accent: amber
+
+nav:
+  - Inicio: index.md
+  - Arquitectura: arquitectura.md
+  - OLTP MySQL: oltp.md
+  - Ingesta Airbyte CDC: ingesta.md
+  - Data Warehouse: dw.md
+  - Transformacion dbt: dbt.md
+  - Dashboard Power BI: powerbi.md
+  - Validacion SQL: validacion.md
