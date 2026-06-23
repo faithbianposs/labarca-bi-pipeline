@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: "Datos aterrizados desde Airbyte (MySQL → PostgreSQL raw)"
+    tables:
+      - name: ventas
+        description: "Tabla de ventas La Barca tal como llega de CDC"
+        columns:
+          - name: id_venta
+            description: "PK de la venta"
+            tests:
+              - not_null
+              - unique
+          - name: fecha
+            tests: [not_null]
+          - name: total_venta
+            tests: [not_null]

@@ -1,0 +1,12 @@
+labarca_dw:
+  target: dev
+  outputs:
+    dev:
+      type:     postgres
+      host:     localhost
+      port:     5433
+      user:     dbt_user
+      password: dbt1234
+      dbname:   labarca_dw
+      schema:   staging     # schema base (dbt lo sobreescribe por modelo)
+      threads:  4

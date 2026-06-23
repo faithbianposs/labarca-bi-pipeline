@@ -1,0 +1,53 @@
+networks:
+  labarca-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  postgres-data:
+
+services:
+
+  labarca-oltp-mysql:
+    image: mysql:8.0
+    container_name: labarca-oltp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: labarca_oltp
+      MYSQL_USER: labarca
+      MYSQL_PASSWORD: labarca1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./oltp-mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --server-id=1 --log-bin=mysql-bin --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
+    networks:
+      - labarca-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  labarca-dw-pg:
+    image: postgres:16
+    container_name: labarca-dw-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dw_admin
+      POSTGRES_PASSWORD: dw1234
+      POSTGRES_DB: labarca_dw
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./dw-pg/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - labarca-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dw_admin -d labarca_dw"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
