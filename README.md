@@ -18,9 +18,6 @@ Solución de Business Intelligence para una pollería peruana, construida con pi
 ## Arquitectura
 
 ```
-CSV (155,057 registros)
-    |
-    v  Python ETL
 MySQL 8.0 (OLTP) — labarca_oltp.ventas
     |
     v  Airbyte CDC (Change Data Capture — binlog MySQL)
